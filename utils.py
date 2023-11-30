@@ -1,4 +1,5 @@
 from io import BytesIO
+import json
 import requests
 from urllib.parse import urlparse
 
@@ -10,6 +11,11 @@ def buff_png (image):
 
 def upload_image (url, image):
     response = requests.put(url, data = buff_png(image), headers = { 'Content-Type': 'image/png' })
+    response.raise_for_status()
+
+def upload_json (url, data):
+    json_str = json.dumps(data)
+    response = requests.put(url, data = json_str, headers = {'Content-Type': 'application/json'})
     response.raise_for_status()
 
 def extract_origin_pathname (url):

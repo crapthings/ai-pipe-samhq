@@ -11,12 +11,11 @@ WORKDIR /workspace
 ADD https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_h.pth
 
 COPY scripts ./scripts
-COPY runpod_app.py .
+COPY *.py .
 
 RUN apt-get update && apt-get install ffmpeg libsm6 libxext6  -y
 RUN chmod +x ./scripts/install.sh
 RUN ./scripts/install.sh
-RUN python ./scripts/cache.py
 
 RUN rm -rf ./scripts
 
