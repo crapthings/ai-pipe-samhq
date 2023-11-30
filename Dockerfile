@@ -8,7 +8,7 @@ ENV DEBIAN_FRONTEND noninteractive
 
 WORKDIR /workspace
 
-ADD https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_h.pth
+ADD https://huggingface.co/lkeab/hq-sam/resolve/main/sam_hq_vit_h.pth .
 
 COPY scripts ./scripts
 COPY *.py .
