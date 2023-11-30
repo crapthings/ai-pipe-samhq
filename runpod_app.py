@@ -1,12 +1,15 @@
+import json
 import requests
+import numpy as np
 from PIL import ImageOps
 from diffusers.utils import load_image
-from transparent_background import Remover
+from segment_anything_hq import SamPredictor, sam_model_registry
 import runpod
 
 from utils import buff_png, upload_image, extract_origin_pathname
 
-remover = Remover()
+sam = sam_model_registry['vit_h'](checkpoint = 'sam_hq_vit_h.pth').to('cuda')
+predictor = SamPredictor(sam)
 
 def run (job):
     # prepare task
@@ -14,43 +17,28 @@ def run (job):
         print('debug', job)
 
         _input = job.get('input')
+        debug = _input.get('debug')
 
         input_url = _input.get('input_url')
         upload_url = _input.get('upload_url')
-        get_mask = _input.get('get_mask')
-        background_color = _input.get('background_color')
-        get_overlay = _input.get('get_overlay')
-        invert_mask = _input.get('invert_mask')
+        points = _input.get('points')
+        # points = json.loads(points)
 
         # move later
         input_image = load_image(input_url)
-        get_mask = 'map' if get_mask else 'rgba'
+        input_image = np.array(input_image)
 
-        if type(background_color) == str:
-            get_mask = background_color
+        predictor.set_image(input_image)
 
-        if get_overlay is True:
-            get_mask = 'overlay'
+        input_point = np.array(points)
+        input_label = np.ones(input_point.shape[0])
 
-        output_image = remover.process(
-            input_image,
-            type = get_mask
+        masks, _, _ = predictor.predict(
+            point_coords = input_point,
+            point_labels = input_label,
         )
 
-        if background_color is None and get_overlay is None and invert_mask is True:
-            output_image = ImageOps.invert(output_image)
-
-        # output
-        output_url = extract_origin_pathname(upload_url)
-        output = { 'output_url': output_url }
-
-        # payload
-        payload = job.copy()
-        payload['output'] = output
-
-        upload_image(upload_url, output_image)
-
-        return output
+        return masks.tolist()
     # caught http[s] error
     except requests.exceptions.RequestException as e:
         return { 'error': e.args[0] }

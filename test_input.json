@@ -1,11 +1,9 @@
 {
     "input": {
-        "input_url": "https://naivelabs-tmp.s3.us-west-1.amazonaws.com/9G4tamL3YrVE.png",
+        "debug": true,
+        "input_url": "./WechatIMG1023.jpg",
         "upload_url": "https://naivelabs-tmp.s3.us-west-1.amazonaws.com/1.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVS3UGYJ4VVPOZ2X5%2F20231125%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20231125T173210Z&X-Amz-Expires=3600&X-Amz-Signature=6b0720e987cd401bb754939078c28b622033a934b9bbf68178c984b4c79171c0&X-Amz-SignedHeaders=host&x-id=PutObject",
-        "get_mask": true,
-        "invert_mask": false,
-        "background_color": "[255, 0, 0]",
-        "get_overlay": false
+        "points": [[730, 730]]
     },
-    "webhook": "http://localhost:3000/api/runpod-webhook"
+    "webhook": "https://mako-true-pleasantly.ngrok-free.app"
 }
