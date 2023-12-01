@@ -23,6 +23,8 @@ def run (job):
         upload_url = _input.get('upload_url')
         points = _input.get('points')
         labels = _input.get('labels')
+        color = _input.get('color', [30, 144, 255, 153])
+        get_mask = _input.get('get_mask')
 
         # move later
         input_image = load_image(input_url)
@@ -38,10 +40,19 @@ def run (job):
             point_labels = input_label
         )
 
-        for mask in masks:
-            color = np.array([30, 144, 255, 153], dtype = np.uint8)
-            mask_image = (mask[..., None] * color).astype(np.uint8)
-            mask_image = Image.fromarray(mask_image, 'RGBA')
+        if get_mask is True:
+            for mask in masks:
+                mask_image = np.where(mask > 0, 255, 0).astype(np.uint8)
+                mask_image = Image.fromarray(mask_image, 'L')
+        else:
+            for mask in masks:
+                color = np.array(color, dtype = np.uint8)
+                mask_image = (mask[..., None] * color).astype(np.uint8)
+                mask_image = Image.fromarray(mask_image, 'RGBA')
+
+        if debug is True:
+            mask_image.save('sample.png')
+        else:
             upload_image(upload_url, mask_image)
 
         output = {

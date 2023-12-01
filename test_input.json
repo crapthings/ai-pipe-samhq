@@ -1,10 +1,12 @@
 {
     "input": {
-        "debug": true,
+        "debug": false,
         "input_url": "https://naivelabs-tmp.s3.us-west-1.amazonaws.com/R90paYIPFCJ0.png",
-        "upload_url": "https://naivelabs-tmp.s3.us-west-1.amazonaws.com/test123.json?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVS3UGYJ4VVPOZ2X5%2F20231130%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20231130T133411Z&X-Amz-Expires=432000&X-Amz-Signature=9ff80404e22671f508953de5ee63d56a304067794177d4622d02de1c7926cbd9&X-Amz-SignedHeaders=host&x-id=PutObject",
+        "upload_url": "https://naivelabs-tmp.s3.us-west-1.amazonaws.com/mask1234.png?X-Amz-Algorithm=AWS4-HMAC-SHA256&X-Amz-Content-Sha256=UNSIGNED-PAYLOAD&X-Amz-Credential=AKIAVS3UGYJ4VVPOZ2X5%2F20231201%2Fus-west-1%2Fs3%2Faws4_request&X-Amz-Date=20231201T101114Z&X-Amz-Expires=432000&X-Amz-Signature=65ed60fb6c77e8224e3a66014d84957c64d23e2b1693c11a7edfba7cc64f7aa4&X-Amz-SignedHeaders=host&x-id=PutObject",
         "points": [[600, 800], [640, 1450], [640, 400]],
-        "labels": [1, 1, 0]
+        "labels": [1, 1, 0],
+        "color": [30, 144, 255, 153],
+        "get_mask": true
     },
     "webhook": "https://mako-true-pleasantly.ngrok-free.app"
 }
